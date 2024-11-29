@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Am I Game</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="star2.css">
+    <script src="./js/responsive.js"></script>
+    <link rel="stylesheet" href="./responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .game-container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        #hint {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        
+        #guess {
+            padding: 10px;
+            width: 200px;
+        }
+        
+        #submit, #hint-btn {
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+
+        <nav class="nav" id="navbar">
+            <div class="icon" onclick="myFunction()"><img src="./images/menu-hidden-responsive-icon.png" alt=""
+                    style="width: 100%;height: 100%;">
+            </div>
+            <ul>
+
+                <li><a href="./index.html">Trang chủ</a></li>
+                <li><a href="./nade.html">Real Madrid</a></li>
+                <li><a href="./game.html" style="font-weight: bold;">Game</a></li>
+
+            </ul>
+        </nav>
+    </div>
+    <br>
+
+    <div class="game-container">
+        <h1>Who Am I?</h1>
+        <div id="hint"></div>
+        <input type="text" id="guess" placeholder="Type your guess here...">
+        <button id="submit">Submit Guess</button>
+        <button id="hint-btn">Get Hint</button>
+
+        <div id="message"></div>
+        <div id="score">Score: <span id="score-value">0</span></div>
+    </div>
+    <script>
+
+        const hints = [
+        { answer: "Albert Einstein", hints: ["Ông đã phát triển thuyết tương đối.", "Ông là một nhà vật lý lý thuyết.", "Ông được trao Giải Nobel Vật lý năm 1921."] },
+        { answer: "Sư tử", hints: ["Được biết đến là vua của rừng xanh.", "Sống thành đàn.", "Có bờm."] },
+        { answer: "Tháp Eiffel", hints: ["Một địa danh nổi tiếng ở Paris.", "Được xây dựng năm 1889.", "Được làm bằng sắt và đứng rất cao."] },
+        { answer: "Bóng rổ", hints: ["Một môn thể thao phổ biến trên toàn thế giới.", "Chơi trên sân.", "Bao gồm việc dẫn bóng và ném vào rổ."] },
+        { answer: "Shakespeare", hints: ["Nhà viết kịch và nhà thơ người Anh.", "Nổi tiếng với các tác phẩm như 'Hamlet' và 'Romeo và Juliet'.", "Sống trong thời kỳ Elizabeth."] },
+        { answer: "Mặt trăng", hints: ["Nó quay quanh Trái Đất.", "Có các giai đoạn như tròn và lưỡi liềm.", "Phi hành gia đã đặt chân lên vào năm 1969."] },
+        { answer: "Python", hints: ["Một ngôn ngữ lập trình phổ biến.", "Nổi tiếng với sự đơn giản và dễ đọc.", "Được sử dụng trong phát triển web, khoa học dữ liệu và AI."] },
+        { answer: "J.K. Rowling", hints: ["Một tác giả nổi tiếng với một loạt sách phổ biến.", "Nhân vật chính của bà có vết sẹo hình tia chớp.", "Bà viết loạt truyện Harry Potter."] },
+        { answer: "Mount Everest", hints: ["Ngọn núi cao nhất trên Trái Đất.", "Nằm ở dãy Himalaya.", "Cao hơn 29.000 feet."] },
+        { answer: "Bóng đá", hints: ["Một môn thể thao có 11 cầu thủ mỗi đội.", "Chơi với một quả bóng tròn.", "Môn thể thao phổ biến nhất thế giới."] },
+        { answer: "Vạn Lý Trường Thành", hints: ["Một công trình nổi tiếng có thể nhìn thấy từ không gian.", "Nó kéo dài hàng ngàn dặm.", "Được xây dựng để chống lại các cuộc xâm lược."] }
+    ];
+    
+    // Add more characters or objects as needed
+
+
+let currentHintIndex = 0;
+let currentHints = [];
+let score = 0;
+let correctAnswer = "";  // Store correct answer here
+
+document.getElementById("hint-btn").addEventListener("click", showHint);
+document.getElementById("submit").addEventListener("click", checkGuess);
+
+function startGame() {
+    const randomIndex = Math.floor(Math.random() * hints.length);
+    const selectedHint = hints[randomIndex];
+    currentHints = selectedHint.hints;
+    correctAnswer = selectedHint.answer; // Store correct answer here
+    currentHintIndex = 0;
+    score = document.getElementById("score-value").innerText;
+    updateHint();
+    updateScore();
+}
+
+function showHint() {
+    if (currentHintIndex < currentHints.length) {
+        document.getElementById("hint").innerText = currentHints[currentHintIndex];
+        currentHintIndex++;
+    } else {
+        document.getElementById("hint").innerText = "No more hints!";
+    }
+}
+
+function checkGuess() {
+    const userGuess = document.getElementById("guess").value.trim();
+
+    if (userGuess.toLowerCase() === correctAnswer.toLowerCase()) {
+        document.getElementById("message").innerText = "Correct! The answer is " + correctAnswer + ".";
+        score = parseInt(score) + 10; 
+        document.getElementById("score-value").innerText = score;
+        score = document.getElementById("score-value").innerText
+
+        startGame(); // Start a new game
+        
+    } else {
+        document.getElementById("message").innerText = "Incorrect, try again!";
+    }
+
+    updateScore();
+}
+
+function updateScore() {
+
+    
+    document.getElementById("score-value").innerText = score;
+}
+
+// Start the game on page load
+window.onload = startGame;
+
+
+    </script>
+</body>
+</html>
+

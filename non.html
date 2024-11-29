@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Title Input</title>
+    </head>
+    <body>
+        <!-- Input Field and Button -->
+        <input id="title" type="text" maxlength="4" onkeyup="Allow()" />
+        <input type="submit" value="Save/Show" onclick="insert()" />
+        
+        <!-- Display Section -->
+        <div id="display"></div>
+
+        <script type="text/javascript">
+            // Global Variables
+            var titles = [];
+            var titleInput = document.getElementById("title");
+            var messageBox = document.getElementById("display");
+
+            // Input Validation
+            function Allow() {
+                if (!titleInput.value.match(/^[a-zA-Z]*$/) && titleInput.value != "") {
+                    titleInput.value = ""; // Clear invalid input
+                    alert("Please Enter only alphabets");
+                }
+            }
+
+            // Insert Title into Array
+            function insert() {
+                if (titleInput.value.trim() !== "") { // Avoid empty or whitespace inputs
+                    titles.push(titleInput.value.trim());
+                    clearAndShow();
+                }
+            }
+
+            // Clear Input and Display Titles
+            function clearAndShow() {
+                titleInput.value = ""; // Clear input field
+                messageBox.innerHTML = ""; // Reset display box
+                for (var i = 0; i < titles.length; i++) {
+                    messageBox.innerHTML += titles[i] + "<br>"; // Add each title on a new line
+                }
+            }
+        </script>
+    </body>
+</html>

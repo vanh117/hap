@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="star2.css">
+    <script src="./js/responsive.js"></script>
+    <link rel="stylesheet" href="./responsive.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Coming+Soon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="game.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Background */
+        body {
+            font-family: 'Coming Soon', cursive;
+            background-color: #f4f4f9;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fullscreen Background Image */
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        /* Background Image */
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('back.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7; /* Adjust opacity for subtlety */
+        }
+
+        /* Gradient Overlay */
+        .background-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2), rgba(255, 255, 0, 0.2));
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite;
+            z-index: -1;
+        }
+
+        /* Gradient Animation */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Header Section */
+        .header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1rem 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header .nav ul li {
+            margin: 0 1.5rem;
+        }
+
+        .header .nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .header .nav ul li a:hover {
+            color: #f39c12;
+        }
+
+        .header .nav ul li a[style="font-weight: bold;"] {
+            color: #f39c12;
+        }
+
+        /* Content Section */
+        .tin-tuc-news-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 3rem 1rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Column Styling */
+        .column {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            width: 20%;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .column:hover {
+            transform: translateY(-5px);
+        }
+
+        .ttin h1 {
+            font-size: 1.5rem;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .ttin a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .ttin a:hover h1 {
+            color: #f39c12;
+        }
+
+        /* Particles Layer */
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Background and Particles -->
+    <div class="background-container">
+        <div class="background-image"></div>
+        <div class="background-gradient"></div>
+        <div id="particles-js"></div>
+    </div>
+
+    <!-- Header -->
+    <body>
+        <header class="header">
+            <nav class="nav" id="navbar">
+                <div class="logo">
+                    <img src="pngegg.png" alt="Logo" class="logo-img" onclick="myFunction()">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="./index.html" class="nav-link">Trang chủ</a></li>
+                    <li><a href="./nade.html" class="nav-link">Real Madrid</a></li>
+                    <li><a href="./game.html" class="nav-link">Game</a></li>
+                </ul>
+                <div class="hamburger" onclick="toggleNav()">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </header>
+
+    <!-- Main Content -->
+    <div class="tin-tuc-news-container row">
+        <div class="column">
+            <article>
+                <div class="ttin">
+                    <a href="2048.html">
+                        <h1>2048</h1>
+                    </a>
+                </div>
+            </article>
+        </div>
+        <div class="column">
+            <article>
+                <div class="ttin">
+                    <a href="hangman.html">
+                        <h1>Hang Man</h1>
+                    </a>
+                </div>
+            </article>
+        </div>
+        <div class="column">
+            <article>
+                <div class="ttin">
+                    <a href="huh.html">
+                        <h1>Who am I?</h1>
+                    </a>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 100,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: "#ffffff"
+                },
+                shape: {
+                    type: "circle",
+                    stroke: {
+                        width: 0,
+                        color: "#000000"
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 4,
+                        size_min: 0.3,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: false
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "random",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: "repulse"
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+
+</body>
+</html>

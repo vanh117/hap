@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bóng</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="star2.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="nade.css">
+    <script src="./js/script.js" defer></script>
+    <script src="./js/responsive.js" defer></script>
+</head>
+
+<body>
+    <header class="header">
+        <nav class="nav" id="navbar">
+            <div class="logo">
+                <img src="pngegg.png" alt="Logo" class="logo-img" onclick="myFunction()">
+            </div>
+            <ul class="nav-links">
+                <li><a href="./index.html" class="nav-link">Trang chủ</a></li>
+                <li><a href="./nade.html" class="nav-link" style="font-weight: bold;">Real Madrid</a></li>
+                <li><a href="./game.html" class="nav-link">Game</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleNav()">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="background-image">
+        <img src="back.jpg" alt="Background Image">
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="container">
+                <h1>Real Madrid</h1>
+                <br>
+                <hr><br>
+                <br>
+                <a href="nade1.html" style="text-decoration: none;">
+                    <div class="blocknews">
+                        <div class="imghold">
+                            <img src="nade1.jpg" alt="">
+                        </div>
+                        <div class="textnews">
+                            <h2>Danh hiệu Real Madrid</h2>
+                        </div>
+                    </div>
+                </a>
+                <hr style="margin-top: 10px; border-top: 1px solid rgb(221, 221, 221); width: 90%;">
+                <a href="nade2.html" style="text-decoration: none;">
+                    <div class="blocknews">
+                        <div class="imghold">
+                            <img src="nade2.jpg" alt="">
+                        </div>
+                        <div class="textnews">
+                            <h2>Các cầu thủ đóng góp nhiều cho đội bóng</h2>
+                        </div>
+                    </div>
+                </a>
+                <hr style="margin-top: 10px; border-top: 1px solid rgb(221, 221, 221); width: 90%;">
+                <a href="nade3.html" style="text-decoration: none;">
+                    <div class="blocknews">
+                        <div class="imghold">
+                            <img src="nade3.jpg" alt="">
+                        </div>
+                        <div class="textnews">
+                            <h2>Sân vận động Santiago Bernabeu</h2>
+                        </div>
+                    </div>
+                </a>
+                <hr style="margin-top: 10px; border-top: 1px solid rgb(221, 221, 221); width: 90%;">
+            </div>
+        </div>
+    </div>
+
+    <div id="star-ani-content">
+        <div id="stars"></div>
+        <div id="stars2"></div>
+        <div id="stars3"></div>
+    </div>
+    <div id="particles-js"></div>
+</body>
+
+</html>

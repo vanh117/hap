@@ -1,0 +1,22 @@
+/* Remove the scrollbar but keep scroll functionality */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: scroll; /* Allow scrolling but hide the scrollbar */
+}
+
+/* Hide scrollbar for webkit browsers (Chrome, Safari, Edge) */
+html::-webkit-scrollbar {
+    display: none;  /* Hides the scrollbar */
+}
+
+/* Firefox: Hides the scrollbar but allows scrolling */
+body {
+    scrollbar-width: none;  /* Hides the scrollbar */
+}
+
+/* Optional: Apply to specific elements if needed */
+.content {
+    overflow: auto; /* Allow scrolling in content if it's large */
+}

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+/* Gray colors */
+:root {
+    --gray250: rgb(250, 250, 250);
+    --gray240: rgb(240, 240, 240);
+    --gray230: rgb(230, 230, 230);
+    --gray220: rgb(220, 220, 220);
+    --gray210: rgb(210, 210, 210);
+    --gray200: rgb(200, 200, 200);
+    --gray180: rgb(180, 180, 180);
+    --gray150: rgb(150, 150, 150);
+    --gray120: rgb(120, 120, 120);
+    --gray90: rgb(90, 90, 90);
+    --gray60: rgb(60, 60, 60);
+    --gray50: rgb(50, 50, 50);
+    --gray40: rgb(40, 40, 40);
+    --gray30: rgb(30, 30, 30);
+  
+    /* Color palette */
+    --purple: rgb(171, 71, 188);
+    --darkPurple: rgb(74, 20, 140);
+    --blue: rgb(3, 169, 244);
+    --darkBlue: rgb(26, 35, 126);
+    --lightGreen: rgb(205, 220, 57);
+    --green: rgb(76, 175, 80);
+    --darkGreen: rgb(46, 125, 50);
+    --red: rgb(211, 47, 47);
+    --darkRed: rgb(183, 28, 28);
+    --orange: rgb(255, 111, 0);
+    --darkOrange: rgb(216, 67, 21);
+    --yellow: rgb(251, 192, 45);
+    --darkYellow: rgb(249, 168, 37);
+  
+    /* Shadows */
+    --shadow1: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+    --shadow2: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
+    --shadow3: rgba(0, 0, 0, 0.19) 0px 10px 30px, rgba(0, 0, 0, 0.23) 0px 6px 10px;
+  }
+  
+  html, body {
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .invisible {
+    opacity: 0;
+  }
+  
+  .scroll-bar::-webkit-scrollbar {
+    background-color: var(--gray200);
+    width: 2px;
+  }
+  
+  .scroll-bar::-webkit-scrollbar-thumb {
+    background-color: var(--gray90);
+  }
+  
+  #chat-wrapper {
+    background-color: white;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  #chat-bot-mood {
+    left: 0;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  
+  #chat-bot-mood.friendly #chat-bot-mood-icon {
+    background: linear-gradient(to right, var(--blue), var(--green));
+  }
+  
+  #chat-bot-mood.friendly #chat-bot-mood-label #chat-bot-mood-value {
+    color: var(--blue);
+  }
+  
+  #chat-bot-mood.suspicious #chat-bot-mood-icon {
+    background: linear-gradient(to right, var(--red), var(--orange));
+  }
+  
+  #chat-bot-mood.suspicious #chat-bot-mood-label #chat-bot-mood-value {
+    color: var(--red);
+  }
+  
+  #chat-bot-mood.boastful #chat-bot-mood-icon {
+    background: linear-gradient(to right, var(--orange), var(--yellow));
+  }
+  
+  #chat-bot-mood.boastful #chat-bot-mood-label #chat-bot-mood-value {
+    color: var(--orange);
+  }
+  
+  #chat-bot-mood-icon {
+    border-radius: 30px;
+    box-shadow: var(--shadow1);
+    display: inline-block;
+    height: 30px;
+    margin-left: 10px;
+    vertical-align: top;
+    width: 30px;
+  }
+  
+  #chat-bot-mood-label {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow1);
+    display: inline-block;
+    height: 20px;
+    margin-left: 5px;
+    padding: 5px 15px;
+    vertical-align: top;
+  }
+  
+  #chat-bot-mood-label h1 {
+    display: inline-block;
+    font-size: 0.9em;
+    font-weight: 300;
+    height: 20px;
+    line-height: 20px;
+    margin: 0;
+    vertical-align: top;
+  }
+  
+  #chat-bot-mood-text {
+    color: var(--gray60);
+  }
+  
+  #letter-pool, #temp-letter-pool {
+    backface-visibility: hidden;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  .pool-letter, .temp-letter {
+    color: var(--gray210);
+    display: inline-block;
+    font-weight: 300;
+    position: absolute;
+  }
+  
+  #letter-overlay {
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+  }
+  
+  .overlay-letter {
+    color: var(--gray210);
+    font-weight: 300;
+    position: absolute;
+    transition: all 1.5s, opacity 0.5s;
+    transition-timing-function: ease-in-out;
+  }
+  
+  .overlay-letter.in-flight {
+    animation: pulse-letter 1s ease-in-out;
+    color: var(--gray210);
+  }
+  
+  #chat-message-window {
+    height: 100%;
+    left: 0;
+    min-width: 600px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  #message-input-wrapper {
+    bottom: 0;
+    height: 90px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  #message-input {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: white;
+    border-radius: 100px;
+    box-shadow: var(--shadow1);
+    height: 50px;
+    line-height: 50px;
+    overflow: hidden;
+    width: 500px;
+  }
+  
+  #message-input.send-enabled #send-message-button {
+    &:before, &:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      animation: pulse 2s ease-in-out infinite;
+      border-radius: 100px;
+      content: '';
+      height: 30px;
+      width: 30px;
+    }
+  }
+  
+  #message-input-field {
+    border: none;
+    color: var(--gray180);
+    font-size: 1em;
+    font-weight: 300;
+    margin-left: 20px;
+    outline: none;
+    width: 430px;
+  }
+  
+  #send-message-button {
+    cursor: pointer;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 50px;
+  }
+  
+  #send-message-button i {
+    color: var(--gray230);
+    height: 50px;
+    line-height: 50px;
+    font-size: 2em;
+    transition: all 0.5s;
+    width: 50px;
+  }
+  
+  #chat-message-column-wrapper {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+  
+  #chat-message-column {
+    bottom: 0;
+    left: 0;
+    min-height: 70px;
+    margin-bottom: 70px;
+    overflow: hidden;
+    padding: 20px 20px 0 20px;
+    width: calc(100% - 40px);
+  }
+  
+  .message {
+    animation: expand 0.5s ease-in-out;
+    margin-bottom: 20px;
+    white-space: nowrap;
+  }
+  
+  .message.received {
+    text-align: left;
+  }
+  
+  .profile-icon i {
+    font-size: 1.5em;
+  }
+  
+  .content {
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: var(--shadow1);
+    display: inline-block;
+    font-size: 1.2em;
+    padding: 10px;
+    width: auto;
+  }
+  
+  .message p {
+    display: inline-block;
+    font-size: 1.2em;
+    margin: 0;
+    white-space: normal;
+  }
+  
+  .message.received .content {
+    background-color: var(--gray250);
+  }
+  
+  .profile-icon {
+    display: inline-block;
+    height: 40px;
+    margin-right: 10px;
+    width: 40px;
+    vertical-align: middle;
+  }
+  
+  #user-message-input-wrapper {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+  }
+  
+  #user-message-input {
+    position: absolute;
+    bottom: 10px;
+    width: 50px;
+  }
+  
+    </style>
+</head>
+<body>
+    <div id="chat-wrapper">
+        <div id="chat-bot-mood">
+          <div id="chat-bot-mood-icon"></div>
+          <div id="chat-bot-mood-label">
+            <h1 id="chat-bot-mood-text">Chatbot is feeling</h1>
+            <h1 id="chat-bot-mood-value">Mood</h1>
+          </div>
+        </div>
+        <div id="letter-pool"></div>
+        <div id="temp-letter-pool"></div>
+        <div id="letter-overlay"></div>
+        <div id="chat-message-window">
+          <div id="message-input-wrapper">
+            <div id="message-input">
+              <input id="message-input-field" type="text" placeholder="Type a message" maxlength="100">
+              <div id="send-message-button">
+                <i class="far fa-arrow-alt-circle-right"></i>
+              </div>
+            </div>
+          </div>
+          <div id="chat-message-column-wrapper" class="scroll-bar">
+            <div id="chat-message-column" class="static"></div>
+          </div>
+        </div>
+      </div>
+
+      <script src = "b.js" async></script>
+</body>
+</html>

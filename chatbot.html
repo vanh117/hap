@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+        #chat-container {
+            width: 350px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        #chat-box {
+            height: 400px;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+        }
+        .message {
+            margin-bottom: 10px;
+            clear: both;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px 8px 0 8px;
+            padding: 8px;
+            float: right;
+        }
+        .bot-message {
+            background-color: #f1f0f0;
+            color: black;
+            border-radius: 8px 8px 8px 0;
+            padding: 8px;
+            float: left;
+        }
+        #message-input {
+            width: 100%;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="chat-box"></div>
+    <input id="message-input" type="text" placeholder="Type a message..." onkeypress="sendMessage(event)">
+</div>
+
+<script src="https://app.boei.help/embed/k/b4102185-9120-407e-b625-4acd8cbc7d7e" async></script>
+</body>
+</html>
